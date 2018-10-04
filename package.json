@@ -1,0 +1,21 @@
+{
+  "name": "ServeStaticContent",
+  "version": "0.0.1",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "dotenv": "^6.0.0",
+    "express": "3.x",
+    "guid": "0.0.12",
+    "mustache": "^2.2.1",
+    "querystring": "^0.2.0",
+    "request": "^2.69.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "nodemon": "^1.18.4"
+  }
+}

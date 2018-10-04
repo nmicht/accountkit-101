@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>AccountKit 101</title>
+    <script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+  </head>
+  <body>
+    <main>
+      <!-- Un formulario básico para el login -->
+      <input value="+52" id="country_code" />
+      <input placeholder="Teléfono" id="phone_number"/>
+      <button onclick="smsLogin();">Iniciar sesión con SMS</button>
+      <div>ó</div>
+      <input placeholder="email" id="email"/>
+      <button onclick="emailLogin();">Iniciar sesión con correo</button>
+
+      <!-- Nuestro formulario para manejar los tokens -->
+      <form id="login_success" method="post" action="/login_success">
+        <input id="csrf" type="hidden" name="csrf" />
+        <input id="code" type="hidden" name="code" />
+      </form>
+    </main>
+
+
+    <script>
+      // Iniciar AccountKit SDK
+      // @see https://developers.facebook.com/docs/accountkit/webjs/reference
+      AccountKit_OnInteractive = function() {
+        AccountKit.init(
+          {
+            appId:"{{appId}}",
+            state:"{{csrf}}",
+            version:"{{version}}",
+            fbAppEventsEnabled:true,
+            redirect:"http://6bfcd3f5.ngrok.io/login_success"
+          }
+        );
+      };
+
+      // Nuestro método para manejar las respuestas del intento de login
+      function loginCallback(response) {
+        if (response.status === 'PARTIALLY_AUTHENTICATED') {
+          // Agregamos a nuestro formulario "temp" el CSRF y el código que regreso FB
+          document.getElementById('code').value = response.code;
+          document.getElementById('csrf').value = response.state;
+          // Lanzamos el submit para procesar los datos y obtener el nuevo token
+          document.getElementById('login_success').submit();
+        } else if (response.status === 'NOT_AUTHENTICATED') {
+          // Aqui podemos meter código para manipular el dom e indicar el error
+        } else if (response.status === 'BAD_PARAMS') {
+          // Aqui podemos meter códig'BAD_PARAMS'ular el dom e indicar el error
+        }
+      }
+
+      // Función para el login con SMS
+      // Mando al SDK el login con los datos escritos en el formulario
+      function smsLogin() {
+        const countryCode = document.getElementById('country_code').value;
+        const phoneNumber = document.getElementById('phone_number').value;
+        AccountKit.login(
+          'PHONE',
+          { countryCode, phoneNumber },
+          loginCallback
+        );
+      }
+
+
+      // Función para el login con correo
+      // Mando al SDK el login con los datos escritos en el formulario
+      function emailLogin() {
+        console.log('They clicked on login via sms');
+        const emailAddress = document.getElementById('email').value;
+        AccountKit.login(
+          'EMAIL',
+          { emailAddress },
+          loginCallback
+        );
+      }
+    </script>
+  </body>
+</html>
