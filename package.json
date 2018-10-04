@@ -2,13 +2,13 @@
   "name": "ServeStaticContent",
   "version": "0.0.1",
   "dependencies": {
-    "body-parser": "^1.15.0",
+    "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
-    "express": "3.x",
+    "express": "^4.16.3",
     "guid": "0.0.12",
-    "mustache": "^2.2.1",
+    "mustache": "^3.0.0",
     "querystring": "^0.2.0",
-    "request": "^2.69.0"
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "eslint": "^5.5.0",
