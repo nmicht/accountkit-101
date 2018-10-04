@@ -38,6 +38,7 @@ app.get('/', (request, response) => {
     appId: AK_APP_ID,
     csrf: csrfGuid,
     version: AK_API_VERSION,
+    siteUrl: process.env.SITE_URL,
   };
 
   const html = Mustache.to_html(loadLogin(), view);
